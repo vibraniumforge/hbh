@@ -1,5 +1,5 @@
 import React from "react";
-// import HBLogo from './Images/rx_reminder.png'
+
 
 class OrderForm extends React.PureComponent {
   render() {
@@ -25,7 +25,7 @@ class OrderForm extends React.PureComponent {
               value={this.props.medicineName}
               onChange={this.props.handleMedicineNameChange}
             />
-            <img src='./Images/rx_reminder.png' alt="HoneyBee Logo"/>
+            
           </div>
           <div>
             <input
@@ -42,18 +42,20 @@ class OrderForm extends React.PureComponent {
               id="days_select"
               className="form-input"
               label="Days supply of RX"
-              value={this.props.daysSupply} 
+              value={this.props.daysSupply}
               onChange={this.props.handleDaysSupplyChange}
             >
-              <option value="" disabled selected hidden>Days supply of RX</option>
+              <option value="" disabled selected hidden>
+                Days supply of RX
+              </option>
               <option value="30">30</option>
               <option value="60">60</option>
               <option value="90">90</option>
               <option value="100">100</option>
               <option value="120">120</option>
             </select>
+            
           </div>
-          
         </form>
       </React.Fragment>
     );

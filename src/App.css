@@ -1,5 +1,12 @@
 .App {
   text-align: center;
+  margin: auto;
+  max-width: 800px;
+  background-color: white;
+}
+
+body {
+  text-align: center;
 }
 
 #reminder-btn {
@@ -9,6 +16,7 @@
   width: 140px;
   border: rgb(64, 145, 233);
   border-radius: 6px;
+  margin: 40px 10px;
 }
 
 .form-input {
@@ -19,3 +27,10 @@
 .ol {
   list-style: none;
 }
+
+#message {
+  text-align: left;
+  max-width: 640px;
+}
+
+/* @media-query */

@@ -10,13 +10,12 @@ class Message extends React.PureComponent {
 
     return (
       <React.Fragment>
-        <div>
-          <p>Hi {this.props.fullName}!</p>
+        <div id="top message">
+          <p>Hi {this.props.fullName.split(" ")[0]}!</p>
           <p>
-            Thanks for signing up for{this.props.medicineName}. We'll send it to
-            {" "}{this.props.email}{" "}
-            on
-            {Date.now() + this.props.daysSupply - 5}, to give you a little
+            Thanks for signing up for{this.props.medicineName}. We'll send it to{" "}
+            {this.props.email} on{" "}
+            {Date.now() + parseInt(this.props.daysSupply, 10) - 5}, to give you a little
             notice.
           </p>
           <button type="button" id="reminder-btn">
