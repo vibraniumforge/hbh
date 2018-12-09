@@ -1,11 +1,12 @@
-import React from "react";
+import React, { Component } from "react";
 
-class OrderForm extends React.PureComponent {
+class OrderForm extends Component {
   render() {
     return (
       <React.Fragment>
         <form method="POST" action="/something">
           <div>
+            <i className="fas fa-address-card" />
             <input
               type="text"
               name="full_name"
@@ -15,6 +16,7 @@ class OrderForm extends React.PureComponent {
               value={this.props.fullName}
               onChange={this.props.handleFullNameChange}
             />
+            <i className="fas fa-pills" />
             <input
               type="text"
               name="medicine_name"
@@ -26,6 +28,7 @@ class OrderForm extends React.PureComponent {
             />
           </div>
           <div>
+            <i className="fas fa-at" />
             <input
               type="email"
               name="email"
@@ -35,6 +38,7 @@ class OrderForm extends React.PureComponent {
               value={this.props.email}
               onChange={this.props.handleEmailChange}
             />
+            <i className="fas fa-calendar-check" />
             <select
               name="days_select"
               id="days_select"

@@ -8,42 +8,41 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fullName: "Jonas Salk",
-      medicineName: "Penicilin",
-      email: "jonassalk@gmail.com",
-      daysSupply: "" || 30,
+      fullName: "",
+      medicineName: "nonsteroidal+anti-inflammatory+drug",
+      email: "",
+      daysSupply: "",
       drugDescriptions: [],
       supplySendDate: ""
     };
   }
 
   componentDidMount() {
-    fetch("https://api.fda.gov/drug/event.json?")
+    fetch(
+      "https://api.fda.gov/drug/event.json?search=patient.drug.openfda.pharm_class_epc:" +
+        this.state.medicineName +
+        "&count=patient.reaction.reactionmeddrapt.exact"
+    )
       .then(res => res.json())
-      // .then(data =>
-      //   console.log(
-      //     "result=",
-      //     data.results[0].patient.reaction.map(data => data.reactionmeddrapt)
-      //   )
-      // )
-      .then(data =>
+      .then(data => {
+        const drugDescriptions = data.results
+          .map(data => data.term)
+          .slice(0, 5);
         this.setState({
-          drugDescriptions: data.results[0].patient.reaction.map(
-            data => data.reactionmeddrapt
-          )
-        })
-      )
+          drugDescriptions
+        });
+      })
       .catch(err => console.log(err));
     this.dateFinder();
   }
 
   dateFinder() {
-    let today = new Date();
-    let priorDate = new Date().setDate(
+    const today = new Date();
+    const priorDate = new Date().setDate(
       today.getDate() + (parseInt(this.state.daysSupply, 10) - 5)
     );
-    let x = new Date(priorDate);
-    let y = x.toLocaleDateString();
+    const x = new Date(priorDate);
+    const y = x.toLocaleDateString();
     this.setState({ supplySendDate: y });
   }
 
@@ -60,7 +59,7 @@ class App extends Component {
   };
 
   handleDaysSupplyChange = e => {
-    this.setState({ daysSupply: e.target.value });
+    this.setState({ daysSupply: e.target.value }, this.dateFinder);
   };
 
   render() {
