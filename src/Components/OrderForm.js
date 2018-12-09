@@ -1,6 +1,5 @@
 import React from "react";
 
-
 class OrderForm extends React.PureComponent {
   render() {
     return (
@@ -25,7 +24,6 @@ class OrderForm extends React.PureComponent {
               value={this.props.medicineName}
               onChange={this.props.handleMedicineNameChange}
             />
-            
           </div>
           <div>
             <input
@@ -45,7 +43,7 @@ class OrderForm extends React.PureComponent {
               value={this.props.daysSupply}
               onChange={this.props.handleDaysSupplyChange}
             >
-              <option value="" disabled selected hidden>
+              <option value="" disabled defaultValue hidden>
                 Days supply of RX
               </option>
               <option value="30">30</option>
@@ -54,7 +52,6 @@ class OrderForm extends React.PureComponent {
               <option value="100">100</option>
               <option value="120">120</option>
             </select>
-            
           </div>
         </form>
       </React.Fragment>

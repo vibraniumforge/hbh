@@ -17,20 +17,32 @@ body {
   border: rgb(64, 145, 233);
   border-radius: 6px;
   margin: 40px 10px;
+  /* position: absolute;
+  left: 20px; */
 }
 
 .form-input {
   padding: 10px;
   margin: 40px;
+  width: 200px;
+  border-radius: 6px;
+  border-style: solid;
+  border-color: lightgray;
+  color: gray;
+  font-weight: bold;
 }
 
 .ol {
   list-style: none;
 }
 
-#message {
+.message {
   text-align: left;
   max-width: 640px;
 }
+
+/* #root {
+  background-color: black
+} */
 
 /* @media-query */

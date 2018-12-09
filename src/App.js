@@ -11,28 +11,40 @@ class App extends Component {
       fullName: "Jonas Salk",
       medicineName: "Penicilin",
       email: "jonassalk@gmail.com",
-      daysSupply: "",
-      drugDescriptions: []
+      daysSupply: "" || 30,
+      drugDescriptions: [],
+      supplySendDate: ""
     };
   }
 
   componentDidMount() {
     fetch("https://api.fda.gov/drug/event.json?")
       .then(res => res.json())
-      .then(data =>
-        console.log(
-          "result=",
-          data.results[0].patient.reaction.map(data => data.reactionmeddrapt)
-        )
-      )
-      // .then(
-      //   data =>
-      //     this.setState({
-      //       drugDescriptions: data.results[0].patient.reaction..map(data=>data.reactionmeddrapt)))
-      //     }),
-      //   console.log("t.s.dr=", this.state.drugDescriptions)
+      // .then(data =>
+      //   console.log(
+      //     "result=",
+      //     data.results[0].patient.reaction.map(data => data.reactionmeddrapt)
+      //   )
       // )
+      .then(data =>
+        this.setState({
+          drugDescriptions: data.results[0].patient.reaction.map(
+            data => data.reactionmeddrapt
+          )
+        })
+      )
       .catch(err => console.log(err));
+    this.dateFinder();
+  }
+
+  dateFinder() {
+    let today = new Date();
+    let priorDate = new Date().setDate(
+      today.getDate() + (parseInt(this.state.daysSupply, 10) - 5)
+    );
+    let x = new Date(priorDate);
+    let y = x.toLocaleDateString();
+    this.setState({ supplySendDate: y });
   }
 
   handleFullNameChange = e => {
@@ -56,6 +68,7 @@ class App extends Component {
       <React.Fragment>
         <div className="App">
           <Welcome />
+          <img src={require("./Images/rx_reminder.png")} alt="HoneyBee Logo" />
           <OrderForm
             fullName={this.state.fullName}
             medicineName={this.state.medicineName}
@@ -72,11 +85,10 @@ class App extends Component {
             email={this.state.email}
             daysSupply={this.state.daysSupply}
             drugDescriptions={this.state.drugDescriptions}
+            supplySendDate={this.state.supplySendDate}
           />
         </div>
-        <div>
-          <img src={require("./Images/rx_reminder.png")} alt="HoneyBee Logo" />
-        </div>
+        <div />
       </React.Fragment>
     );
   }
