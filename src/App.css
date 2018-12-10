@@ -1,7 +1,7 @@
 .App {
   text-align: center;
   margin: auto;
-  max-width: 800px;
+  max-width: 960px;
   background-color: white;
 }
 
@@ -31,9 +31,9 @@ body {
 }
 
 .form-input {
-  padding: 10px;
-  margin: 40px;
-  width: 200px;
+  padding: 0 10px 0 10px;
+  margin: 0;
+  width: 180px;
   border-radius: 6px;
   border-style: solid;
   border-color: lightgray;
@@ -50,8 +50,36 @@ body {
   max-width: 640px;
 }
 
-/* #root {
-  background-color: black
-} */
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  padding: 0 3rem;
+}
 
-/* @media-query */
+.grid-3 {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.center {
+  text-align: center;
+  margin: auto;
+}
+
+.icon {
+  float: left;
+  vertical-align: middle;
+}
+
+#bottom {
+  margin-bottom: 50px;
+}
+
+@media (max-width: 560px) {
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+}

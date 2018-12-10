@@ -11,36 +11,37 @@ class Message extends Component {
 
     return (
       <React.Fragment>
-        <div className="message">
-          <p>Hi {this.props.fullName.split(" ")[0]}!</p>
-          <p>
-            Thanks for signing up for {this.props.medicineName}. We'll send it
-            to {this.props.email} on {this.props.supplySendDate}, to give you a
-            little notice.
-          </p>
-        </div>
-        <div>
-          <button disabled type="button" id="reminder-btn">
-            Set Reminder
-          </button>
-        </div>
-        <div className="message">
-          <p>
-            As a service, here are the possible drug reactions you should
-            contact your doctor if you're experiencing:
-          </p>
-          <i className="fas fa-allergies" />
-          <select
-            name="drug_reactions"
-            id="drug_reactions"
-            className="form-input"
-            label="Drug Reactions"
-
-            // value={this.props.drugDescriptions}
-            // onChange={this.props.handleDaysSupplyChange}
-          >
-            {reactions}
-          </select>
+        <div id="bottom">
+          <div className="message">
+            <p>Hi {this.props.fullName.split(" ")[0]}!</p>
+            <p>
+              Thanks for signing up for {this.props.medicineName}. We'll send it
+              to {this.props.email ? this.props.email : ""} on{" "}
+              {this.props.supplySendDate ? this.props.supplySendDate : ""}, to
+              give you a little notice.
+            </p>
+          </div>
+          <div>
+            <button
+              type="button"
+              id="reminder-btn"
+              // href="window.open('http://honeybeehealth.com','_blank')"
+              onClick={this.props.endpointCall}
+            >
+              Set Reminder
+            </button>
+          </div>
+          <div className="message">
+            <p>
+              As a service, here are the possible drug reactions you should
+              contact your doctor if you're experiencing:
+            </p>
+            <div>
+              {" "}
+              <i className="fas fa-allergies" />
+              {reactions}
+            </div>
+          </div>
         </div>
       </React.Fragment>
     );

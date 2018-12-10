@@ -9,41 +9,60 @@ class App extends Component {
     super(props);
     this.state = {
       fullName: "",
-      medicineName: "nonsteroidal+anti-inflammatory+drug",
+      medicineName: "",
       email: "",
-      daysSupply: "",
+      daysSupply: 90,
       drugDescriptions: [],
       supplySendDate: ""
     };
   }
 
   componentDidMount() {
+    if (this.state.medicineName) {
+      this.endpointCall();
+    }
+  }
+
+  endpointCall = () => {
+    console.log("epC fires");
     fetch(
-      "https://api.fda.gov/drug/event.json?search=patient.drug.openfda.pharm_class_epc:" +
-        this.state.medicineName +
-        "&count=patient.reaction.reactionmeddrapt.exact"
+      "https://api.fda.gov/drug/event.json?search=patient.drug.medicinalproduct.exact:" +
+        this.state.medicineName.toUpperCase()
     )
       .then(res => res.json())
       .then(data => {
-        const drugDescriptions = data.results
-          .map(data => data.term)
+        const drugDescriptions = data.results[0].patient.reaction
+          .map(data => data.reactionmeddrapt)
           .slice(0, 5);
         this.setState({
           drugDescriptions
         });
       })
       .catch(err => console.log(err));
-    this.dateFinder();
-  }
+  };
+  // fetch(
+  //   "https://api.fda.gov/drug/event.json?search=patient.drug.openfda.pharm_class_epc:" +
+  //     this.state.medicineName +
+  //     "&count=patient.reaction.reactionmeddrapt.exact"
+  // .then(res => res.json())
+  // .then(data => {
+  //   const drugDescriptions = data.results
+  //     .map(data => data.term)
+  //     .slice(0, 5);
+  //   this.setState({
+  //     drugDescriptions
+  //   });
+  // })
+  // .catch(err => console.log(err));
 
   dateFinder() {
     const today = new Date();
     const priorDate = new Date().setDate(
       today.getDate() + (parseInt(this.state.daysSupply, 10) - 5)
     );
-    const x = new Date(priorDate);
-    const y = x.toLocaleDateString();
-    this.setState({ supplySendDate: y });
+    const x = new Date(priorDate).toLocaleDateString();
+
+    this.setState({ supplySendDate: x });
   }
 
   handleFullNameChange = e => {
@@ -67,7 +86,6 @@ class App extends Component {
       <React.Fragment>
         <div className="App">
           <Welcome />
-          <img src={require("./Images/rx_reminder.png")} alt="HoneyBee Logo" />
           <OrderForm
             fullName={this.state.fullName}
             medicineName={this.state.medicineName}
@@ -85,6 +103,7 @@ class App extends Component {
             daysSupply={this.state.daysSupply}
             drugDescriptions={this.state.drugDescriptions}
             supplySendDate={this.state.supplySendDate}
+            endpointCall={this.endpointCall}
           />
         </div>
         <div />
