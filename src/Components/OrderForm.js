@@ -4,30 +4,30 @@ class OrderForm extends Component {
   render() {
     return (
       <React.Fragment>
-        <form method="POST" action="/something">
+        <form>
           <section className="container grid-3 center">
             <div>
               <i className="fas fa-address-card icon" />
               <input
                 type="text"
-                name="full_name"
-                id="full_name"
+                name="fullName"
+                id="fullName"
                 placeholder="Full Name"
                 className="form-input"
                 value={this.props.fullName}
-                onChange={this.props.handleFullNameChange}
+                onChange={this.props.handleChange("fullName")}
               />
             </div>
             <div>
-              <i className="fas fa-pills icon" />
+              <i className="fas fa-at icon" />
               <input
-                type="text"
-                name="medicine_name"
-                id="medicine_name"
-                placeholder="Medicine Name"
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Email"
                 className="form-input"
-                value={this.props.medicineName.split("+").join(" ")}
-                onChange={this.props.handleMedicineNameChange}
+                value={this.props.email}
+                onChange={this.props.handleChange("email")}
               />
             </div>
             <div>
@@ -39,15 +39,15 @@ class OrderForm extends Component {
           </section>
           <section className="container grid-3 center">
             <div>
-              <i className="fas fa-at icon" />
+              <i className="fas fa-pills icon" />
               <input
-                type="email"
-                name="email"
-                id="email"
-                placeholder="Email"
+                type="text"
+                name="medicineName"
+                id="medicineName"
+                placeholder="Medicine Name"
                 className="form-input"
-                value={this.props.email}
-                onChange={this.props.handleEmailChange}
+                value={this.props.medicineName.split("+").join(" ")}
+                onChange={this.props.handleChange("medicineName")}
               />
             </div>
             <div>

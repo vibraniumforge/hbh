@@ -21,10 +21,10 @@ class App extends Component {
     if (this.state.medicineName) {
       this.endpointCall();
     }
+    this.dateFinder();
   }
 
   endpointCall = () => {
-    console.log("epC fires");
     fetch(
       "https://api.fda.gov/drug/event.json?search=patient.drug.medicinalproduct.exact:" +
         this.state.medicineName.toUpperCase()
@@ -40,41 +40,20 @@ class App extends Component {
       })
       .catch(err => console.log(err));
   };
-  // fetch(
-  //   "https://api.fda.gov/drug/event.json?search=patient.drug.openfda.pharm_class_epc:" +
-  //     this.state.medicineName +
-  //     "&count=patient.reaction.reactionmeddrapt.exact"
-  // .then(res => res.json())
-  // .then(data => {
-  //   const drugDescriptions = data.results
-  //     .map(data => data.term)
-  //     .slice(0, 5);
-  //   this.setState({
-  //     drugDescriptions
-  //   });
-  // })
-  // .catch(err => console.log(err));
 
-  dateFinder() {
+  dateFinder = () => {
     const today = new Date();
     const priorDate = new Date().setDate(
-      today.getDate() + (parseInt(this.state.daysSupply, 10) - 5)
+      today.getDate() +
+        parseInt(this.state.daysSupply ? this.state.daysSupply : 90),
+      10 - 5
     );
     const x = new Date(priorDate).toLocaleDateString();
-
     this.setState({ supplySendDate: x });
-  }
-
-  handleFullNameChange = e => {
-    this.setState({ fullName: e.target.value });
   };
 
-  handleMedicineNameChange = e => {
-    this.setState({ medicineName: e.target.value });
-  };
-
-  handleEmailChange = e => {
-    this.setState({ email: e.target.value });
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.value });
   };
 
   handleDaysSupplyChange = e => {
@@ -82,6 +61,15 @@ class App extends Component {
   };
 
   render() {
+    const reactions = this.state.drugDescriptions.map((reaction, index) => (
+      <ol className="drug-reactions ol">
+        <span>
+          <li key={index}>
+            <i className="fas fa-allergies" /> {reaction}
+          </li>
+        </span>
+      </ol>
+    ));
     return (
       <React.Fragment>
         <div className="App">
@@ -91,22 +79,19 @@ class App extends Component {
             medicineName={this.state.medicineName}
             email={this.state.email}
             daysSupply={this.state.daysSupply}
-            handleFullNameChange={this.handleFullNameChange}
-            handleMedicineNameChange={this.handleMedicineNameChange}
-            handleEmailChange={this.handleEmailChange}
             handleDaysSupplyChange={this.handleDaysSupplyChange}
+            handleChange={this.handleChange}
           />
           <Message
             fullName={this.state.fullName}
             medicineName={this.state.medicineName}
             email={this.state.email}
             daysSupply={this.state.daysSupply}
-            drugDescriptions={this.state.drugDescriptions}
             supplySendDate={this.state.supplySendDate}
             endpointCall={this.endpointCall}
           />
+          {reactions}
         </div>
-        <div />
       </React.Fragment>
     );
   }

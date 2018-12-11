@@ -1,6 +1,5 @@
-import React from "react";
-
-class Welcome extends React.PureComponent {
+import React, { Component } from "react";
+class Welcome extends Component {
   render() {
     return (
       <React.Fragment>
